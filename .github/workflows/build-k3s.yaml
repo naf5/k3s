@@ -6,7 +6,7 @@ on:
     upload-repo:
       type: boolean
       required: false
-      default: false
+      default: true
 
 permissions:
   contents: read
