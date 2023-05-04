@@ -17,3 +17,7 @@ PROXY_OPTS=
 docker build ${PROXY_OPTS} --build-arg VERSION=${VERSION} -t ${IMAGE} -f package/Dockerfile .
 ./scripts/image_scan.sh ${IMAGE} ${ARCH}
 echo Built ${IMAGE}
+
+docker save ${IMAGE} > k3simage.tar
+pwd
+ls
