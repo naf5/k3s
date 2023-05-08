@@ -1,5 +1,5 @@
-FROM alpine:3.17 as base
-RUN apk add -U ca-certificates tar zstd
+FROM ubuntu as base
+RUN apt-get update && apt-get install -y ca-certificates tar zstd
 COPY build/out/data.tar.zst /
 RUN mkdir -p /image/etc/ssl/certs /image/run /image/var/run /image/tmp /image/lib/modules /image/lib/firmware && \
     tar -xa -C /image -f /data.tar.zst && \
