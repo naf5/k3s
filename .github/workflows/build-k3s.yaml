@@ -24,6 +24,14 @@ jobs:
         DOCKER_BUILDKIT=1 SKIP_AIRGAP=1 SKIP_VALIDATE=1 make
         tar -czvf ../k3s-repo.tar.gz .
         mv ../k3s-repo.tar.gz .
+        cp k3simage.tar ../ || true
+        cp ../k3simage.tar . || true
+    - name: "Upload docker image"
+      if: inputs.upload-repo == true
+      uses: actions/upload-artifact@v3
+      with:
+        name: k3simage.tar
+        path: k3simage.tar
     - name: "Upload K3s directory"
       if: inputs.upload-repo == true
       uses: actions/upload-artifact@v3
