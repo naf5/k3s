@@ -25,6 +25,8 @@ jobs:
         tar -czvf ../k3s-repo.tar.gz .
         mv ../k3s-repo.tar.gz .
         ls -l
+        docker build -t k3simage -f package/Dockerfile .
+        docker save k3simage > k3simage.tar
     - name: "Upload docker image"
       if: inputs.upload-repo == true
       uses: actions/upload-artifact@v3
