@@ -8,6 +8,7 @@ RUN mkdir -p /image/etc/ssl/certs /image/run /image/var/run /image/tmp /image/li
 FROM scratch
 ARG VERSION="dev"
 COPY --from=base /image /
+COPY --from=base /bin/hostnamectl /bin/hostnamectl
 RUN mkdir -p /etc && \
     echo 'hosts: files dns' > /etc/nsswitch.conf && \
     echo "PRETTY_NAME=\"K3s ${VERSION}\"" > /etc/os-release && \
