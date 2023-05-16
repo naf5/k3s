@@ -1,5 +1,5 @@
 FROM ubuntu as base
-RUN apt-get update && apt-get install -y ca-certificates tar zstd systemd
+RUN apt-get update && apt-get install -y ca-certificates tar zstd
 COPY build/out/data.tar.zst /
 RUN mkdir -p /image/etc/ssl/certs /image/run /image/var/run /image/tmp /image/lib/modules /image/lib/firmware && \
     tar -xa -C /image -f /data.tar.zst && \
@@ -8,11 +8,12 @@ RUN mkdir -p /image/etc/ssl/certs /image/run /image/var/run /image/tmp /image/li
 FROM scratch
 ARG VERSION="dev"
 COPY --from=base /image /
-COPY --from=base /bin/hostnamectl /bin/hostnamectl
 RUN mkdir -p /etc && \
     echo 'hosts: files dns' > /etc/nsswitch.conf && \
     echo "PRETTY_NAME=\"K3s ${VERSION}\"" > /etc/os-release && \
     chmod 1777 /tmp
+RUN printf '#!/bin/sh\nhostname' > /bin/hostnamectl && \
+    chmod 777 /bin/hostnamectl
 VOLUME /var/lib/kubelet
 VOLUME /var/lib/rancher/k3s
 VOLUME /var/lib/cni
