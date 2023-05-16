@@ -12,7 +12,7 @@ RUN mkdir -p /etc && \
     echo 'hosts: files dns' > /etc/nsswitch.conf && \
     echo "PRETTY_NAME=\"K3s ${VERSION}\"" > /etc/os-release && \
     chmod 1777 /tmp
-RUN printf '#!/bin/sh\nhostname' > /bin/hostnamectl && \
+RUN printf '#!/bin/sh\nhostname $2' > /bin/hostnamectl && \
     chmod 777 /bin/hostnamectl
 VOLUME /var/lib/kubelet
 VOLUME /var/lib/rancher/k3s
